@@ -9,8 +9,9 @@ The goal was to build a practical, decision-support dashboard that helps compare
 
 ## 📂 Project Structure
 
-* 📄 `Data_Cleaning.sql` — SQL query used to join and prepare the analysis-ready dataset.
+* 📄 `data_preparation.sql` — SQL query used to join and prepare the analysis-ready dataset.
 * 📊 `detail_clean.csv` — Final transaction-level dataset used in Power BI.
+* 📁 `domain_properties.csv` — Raw property transaction dataset used as the primary source table.
 * 📁 `regions.csv` — Custom suburb-to-region mapping table.
 * 📁 `income_data.csv` — Suburb-level ABS weekly household income data.
 * 📈 `sydney_affordability.pbix` — The interactive Power BI dashboard file.
