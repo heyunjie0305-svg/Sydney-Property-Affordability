@@ -24,7 +24,7 @@ To prepare the final analysis-ready dataset, I used SQL to combine raw property 
 Key steps implemented in `Data_Cleaning.sql`:
 
 ### 1️⃣ Select the core transaction fields
-Selected the raw property-level fields needed for analysis, including date, suburb, property type, price, CBD distance, and property attributes.
+First, I selected the raw property-level fields needed for analysis, including date, suburb, property type, price, CBD distance, and property attributes.
 ```sql
 SELECT
     d.date_sold,
@@ -41,8 +41,7 @@ FROM domain_properties d
 ```
 
 ### 2️⃣ Add custom Sydney region mapping
-
-Joined the raw property data with a custom `regions.csv` table to group selected suburbs into broader Sydney regions (e.g., Inner West, North Shore). This made it possible to compare affordability at both the suburb and regional levels.
+Next, I joined the raw property data with a custom regions.csv table to group selected suburbs into broader Sydney regions such as Inner West and North Shore. This made it possible to compare affordability at both the suburb and regional levels.
 
 ```sql
 JOIN regions r
@@ -51,8 +50,7 @@ JOIN regions r
 ```
 
 ### 3️⃣ Add ABS household income data
-
-Joined suburb-level ABS weekly household income data to provide an economic context for each suburb. This was an important step because the raw property dataset alone did not contain a suitable household affordability measure.
+I then joined suburb-level ABS weekly household income data to provide an economic context for each suburb. This was an important step because the raw property dataset alone did not contain a suitable household affordability measure.
 
 ```sql
 JOIN income_data i
@@ -61,7 +59,6 @@ JOIN income_data i
 ```
 
 ### 4️⃣ Calculate annualised household income
-
 Because the ABS data was collected as weekly household income, I annualised it by multiplying by 52 to create a more interpretable income base.
 
 ```sql
@@ -70,7 +67,6 @@ ROUND(i.weekly_household_income * 52, 0) AS estimated_annual_household_income
 ```
 
 ### 5️⃣ Create the affordability ratio
-
 Using property price and annualised household income, I created a custom affordability metric to compare how many times annual household income is needed to match the transaction price.
 
 ```sql
@@ -79,7 +75,6 @@ ROUND(1.0 * d.price / (i.weekly_household_income * 52), 2) AS affordability_rati
 ```
 
 ### 6️⃣ Filter to relevant and valid records
-
 Finally, I filtered the dataset to keep only relevant residential property types and remove records with missing or invalid price/income values, ensuring a clean dataset for the dashboard.
 
 ```sql
