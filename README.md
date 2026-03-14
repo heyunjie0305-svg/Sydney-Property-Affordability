@@ -127,9 +127,8 @@ The Power BI dashboard was designed as an interactive overview page with:
 
 ## 🛠️ Skills Demonstrated
 
-* 🔗 **SQL Data Integration:** Multi-table `JOIN`s, string manipulation (`TRIM`, `LOWER`), and data filtering.
-* 🧮 **Data Engineering:** Custom metric creation (Affordability Ratio) and annualized income calculation.
-* 🧹 **Data Cleaning:** Null handling, outlier removal, and date parsing via Power Query.
-* 📈 **Data Visualization:** Interactive Power BI design, DAX KPIs, Bookmarks, and Cross-filtering.
-* 🧠 **Business Acumen:** Translating raw datasets into actionable decision-support insights.
-
+- 🔗 **SQL Data Integration:** Multi-table joins, filtering, and data preparation.
+- 🧮 **Metric Engineering:** Custom metric creation (Affordability Ratio) and annualized income calculation.
+- 🧹 **Data Cleaning:** Null handling, outlier removal, and date parsing via Power Query.
+- 📊 **Data Visualization:** Interactive Power BI design, DAX KPIs, Bookmarks, and Cross-filtering.
+- 🧠 **Business Acumen:** Translating raw housing data into affordability insights for decision support.
