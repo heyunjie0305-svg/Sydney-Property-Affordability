@@ -93,18 +93,17 @@ WHERE d.type IN ('House', 'Apartment / Unit / Flat')
 Additional transformation steps were completed within Power BI to refine the dataset:
 
 * 📅 Corrected date parsing issues caused by `dd/m/yy` formatting and rebuilt a valid `sold_date` field.
-* ⏳ Engineered a `Year` column for filtering and time-series trend analysis.
-* 🚫 Removed extreme luxury outliers that would heavily skew average pricing for first-home buyers.
-* 🔢 Standardized data types across price, affordability ratio, and numerical property fields.
-
+* ⏳ Added a year column for filtering and trend analysis
+* 🚫 Removed extreme / unrealistic records
+* 🔢 Checked data types across price, affordability ratio, and numerical property fields
 ---
 
 ## 📊 Dashboard Overview
 
-The Power BI dashboard was designed as an interactive overview page featuring:
+The Power BI dashboard was designed as an interactive overview page with:
 
 * **Interactive Slicers:** Filter by Year, Region, and Property Type.
-* **Dynamic KPIs:** Average Property Price, Affordability Ratio, and Distance to CBD.
+* **KPI Cards:** Average Property Price, Affordability Ratio, and Distance to CBD.
 * **Advanced Interactivity:** **Bookmarks & Action Buttons** to toggle between Top 10 Most/Least Affordable suburbs.
 * **Visual Storytelling:** Scatter plots (Affordability vs. Distance) and Trend charts to track changes over time.
 
