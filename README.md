@@ -8,7 +8,7 @@ The goal was to build a practical, decision-support dashboard that helps compare
 
 ## 📂 Project Structure
 
-* 📄 `data_cleaning.sql` — SQL query used to join and prepare the analysis-ready dataset.
+* 📄 `Data_Cleaning.sql` — SQL query used to join and prepare the analysis-ready dataset.
 * 📊 `detail_clean.csv` — Final transaction-level dataset used in Power BI.
 * 📁 `regions.csv` — Custom suburb-to-region mapping table.
 * 📁 `income_data.csv` — Suburb-level ABS weekly household income data.
@@ -20,8 +20,7 @@ The goal was to build a practical, decision-support dashboard that helps compare
 ## 🧩 Data Preparation in SQL
 
 To prepare the final analysis-ready dataset, I used SQL to combine raw property transactions with two supporting tables (custom **Sydney region mapping** and suburb-level **ABS weekly household income**). This enriched each transaction with location grouping and affordability context.
-
-Key steps implemented in `detail_query.sql`:
+Key steps implemented in `Data_Cleaning.sql`:
 
 ### 1️⃣ Select the core transaction fields
 Selected the raw property-level fields needed for analysis, including date, suburb, property type, price, CBD distance, and property attributes.
