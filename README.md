@@ -102,10 +102,13 @@ Additional transformation steps were completed within Power BI to refine the dat
 
 The Power BI dashboard was designed as an interactive overview page with:
 
-* **Interactive Slicers:** Filter by Year, Region, and Property Type.
-* **KPI Cards:** Average Property Price, Affordability Ratio, and Distance to CBD.
-* **Advanced Interactivity:** **Bookmarks & Action Buttons** to toggle between Top 10 Most/Least Affordable suburbs.
-* **Visual Storytelling:** Scatter plots (Affordability vs. Distance) and Trend charts to track changes over time.
+* Year, Region, and Property Type slicers
+* KPI cards for average price, affordability ratio, and distance to CBD
+* A Top 10 suburb affordability ranking
+* A region-level affordability comparison
+* A scatter plot of affordability vs distance to CBD
+* A trend chart by year and property type
+* Bookmarks and action buttons to switch between most and least affordable suburbs
 
 ---
 
