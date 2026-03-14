@@ -1,4 +1,6 @@
 # 🏡 Sydney First-Home Buyer Affordability Dashboard
+```markdown
+![Dashboard Overview](dashboard_overview.png)
 
 This project explores first-home buyer affordability across selected Sydney suburbs (2016–2021) by combining property transaction data, ABS household income data, custom region mapping, and interactive Power BI visualisations.
 
@@ -131,22 +133,4 @@ The Power BI dashboard was designed as an interactive overview page featuring:
 * 🧹 **Data Cleaning:** Null handling, outlier removal, and date parsing via Power Query.
 * 📈 **Data Visualization:** Interactive Power BI design, DAX KPIs, Bookmarks, and Cross-filtering.
 * 🧠 **Business Acumen:** Translating raw datasets into actionable decision-support insights.
-
----
-
-## ⚙️ How to Reproduce
-
-1. Import raw property dataset, `regions.csv`, and `income_data.csv` into SQL.
-2. Execute `detail_query.sql` to generate the joined, analysis-ready dataset.
-3. Export the cleaned dataset as a CSV and load it into Power BI.
-4. Apply Power Query steps (rebuild dates, extract year).
-5. Build DAX measures and configure interactive dashboard visuals.
-
----
-
-## 🚀 Future Improvements
-
-* 📊 Shift from average-based metrics to **median-based affordability** to reduce the impact of outliers.
-* 🏦 Incorporate dynamic **borrowing assumptions** (e.g., varying interest rates, deposit sizes).
-* 🗺️ Add drill-through detail pages for specific suburb deep-dives.
 
