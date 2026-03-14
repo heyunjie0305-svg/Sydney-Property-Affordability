@@ -115,12 +115,11 @@ The Power BI dashboard was designed as an interactive overview page with:
 
 ## 💡 Key Insights
 
-* 🚨 **High Affordability Pressure:** Across selected suburbs, the average ratio sits at a staggering 17.23, highlighting the massive hurdle for first-home buyers.
-* 📈 **The Extreme House Premium:** Filtering to "Houses" causes both average price and affordability ratio to spike significantly, indicating severe entry barriers for detached housing.
-* 🏢 **Apartments as the "Golden Ticket":** Units generally show much lower affordability ratios and shorter CBD distances, offering the strongest balance between cost and location.
-* 🎯 **The Sweet Spots:** Suburbs like Wolli Creek, Alexandria, and Parramatta provide a relatively better balance between affordability and city access.
-* 💰 **Premium Hubs:** High-demand areas (Burwood, Strathfield, North Sydney) continue to show extreme affordability pressure.
-
+* 🚨 **Affordability pressure remains high across the selected market:** Across the selected Sydney suburbs, the average affordability ratio is 17.23, showing that first-home buyers still face substantial price pressure even before narrowing the analysis by property type.
+* 🏘️ **Houses are consistently less affordable than apartments:** When filtered to houses, the average property price rises to $2.17M and the affordability ratio increases to 19.41. By contrast, apartments/units show a lower average price ($1.17M) and a lower affordability ratio (10.34), suggesting that property type plays a major role in entry affordability.
+* 🎯 **Some suburbs appear to offer a stronger balance between affordability and location:** Based on the suburb ranking and scatter plot, areas such as Wolli Creek, Alexandria, and Parramatta appear to provide a relatively better balance between affordability and access, while higher-premium suburbs such as Burwood, Strathfield, and North Sydney remain much less affordable.
+* 📈 **Affordability pressure has increased over time, especially for houses:** The trend chart suggests that affordability pressure for houses rose steadily between 2016 and 2021, with a clearer upward movement after 2020. Apartments/units remained more affordable throughout the period, although their affordability ratio also increased by 2021.
+  
 ---
 
 ## 🛠️ Skills Demonstrated
