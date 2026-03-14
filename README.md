@@ -1,4 +1,4 @@
-# 🏡 Sydney First-Home Buyer Affordability — End-to-End Data Analysis
+# 🏡 Sydney First-Home Buyer Affordability Dashboard
 
 This project explores the harsh reality of the property market for first-home buyers in Greater Sydney (2016-2021). By combining historical property sales data with regional income data, this analysis calculates the true **"Affordability Ratio"** (years of median income required to purchase a property).
 
