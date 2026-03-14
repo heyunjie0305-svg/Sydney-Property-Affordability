@@ -1,26 +1,30 @@
 # 🏡 Sydney First-Home Buyer Affordability Dashboard
 
-This project explores the harsh reality of the property market for first-home buyers in Greater Sydney (2016-2021). By combining historical property sales data with regional income data, this analysis calculates the true **"Affordability Ratio"** (years of median income required to purchase a property).
+This project explores first-home buyer affordability across selected Sydney suburbs (2016–2021) by combining property transaction data, ABS household income data, custom region mapping, and interactive Power BI visualisations.
+
+The goal was to build a practical, decision-support dashboard that helps compare **property price, affordability, distance to CBD, and suburb-level patterns** across selected Sydney residential areas.
+
+---
 
 ## 📂 Project Structure
 
-* 📄 `Data_Cleaning.sql` → SQL scripts used to clean raw data, handle missing values, and join regional income data with property sales.
-* 📊 `Sydney_Affordability_Dashboard.pbix` → The interactive Power BI dashboard containing the final UI, DAX measures, and data model.
-* 📁 `Raw_Data/` → CSV files containing ABS regional median income and raw property transactions.
+* 📄 `detail_query.sql` — SQL query used to join and prepare the analysis-ready dataset.
+* 📊 `detail_clean.csv` — Final transaction-level dataset used in Power BI.
+* 📁 `regions.csv` — Custom suburb-to-region mapping table.
+* 📁 `income_data.csv` — Suburb-level ABS weekly household income data.
+* 📈 `sydney_affordability.pbix` — The interactive Power BI dashboard file.
+* 🖼️ `dashboard_overview.png` — Dashboard screenshot.
+
+---
 
 ## 🧩 Data Preparation in SQL
 
-To prepare the final analysis-ready dataset, I used SQL to combine raw property transactions with two supporting tables:
+To prepare the final analysis-ready dataset, I used SQL to combine raw property transactions with two supporting tables (custom **Sydney region mapping** and suburb-level **ABS weekly household income**). This enriched each transaction with location grouping and affordability context.
 
-- a custom **Sydney region mapping** table
-- suburb-level **ABS weekly household income** data
-
-This allowed me to enrich each property transaction with location grouping and affordability context before loading the data into Power BI.
+Key steps implemented in `detail_query.sql`:
 
 ### 1️⃣ Select the core transaction fields
-
-First, I selected the raw property-level fields needed for analysis, including date, suburb, property type, price, CBD distance, and property attributes.
-
+Selected the raw property-level fields needed for analysis, including date, suburb, property type, price, CBD distance, and property attributes.
 ```sql
 SELECT
     d.date_sold,
@@ -34,27 +38,116 @@ SELECT
     d.property_size
 FROM domain_properties d
 
+```
+
 ### 2️⃣ Add custom Sydney region mapping
 
-Next, I joined the raw property data with a custom regions.csv table to group selected suburbs into broader Sydney regions such as Inner West, North Shore, and South / St George.
+Joined the raw property data with a custom `regions.csv` table to group selected suburbs into broader Sydney regions (e.g., Inner West, North Shore). This made it possible to compare affordability at both the suburb and regional levels.
 
 ```sql
 JOIN regions r
     ON TRIM(LOWER(d.suburb)) = TRIM(LOWER(r.suburb))
 
-## 📊 Dashboard Interactivity (Power BI)
-* **Dynamic UI:** Designed a custom dark/light-mode UI.
-* **Bookmarks & Buttons:** Implemented an interactive toggle switch allowing users to seamlessly switch between the **"Top 10 Most Affordable"** and **"Top 10 Least Affordable"** suburbs without losing context.
-* **Cross-filtering:** Used scatter plots (Affordability vs Distance to CBD) to allow users to filter the entire dashboard by clicking on specific property clusters.
+```
 
-## 💡 Key Business Insights
+### 3️⃣ Add ABS household income data
 
-* 📈 **The Extreme House Premium:** The overall affordability ratio for Houses sits at a staggering 19.41. The trendline shows a concerning upward spike starting in 2020.
-* 🏢 **Apartments as the "Golden Ticket":** Shifting to Apartments/Units drops the affordability ratio by nearly half (to 10.34), proving it to be the most realistic entry point to the inner-city market.
-* 🎯 **The Sweet Spots:** Areas like **Annandale** and **Marrickville** offer the ultimate balance—lower affordability ratios while keeping buyers well within a 10km radius of the CBD.
+Joined suburb-level ABS weekly household income data to provide an economic context for each suburb. This was an important step because the raw property dataset alone did not contain a suitable household affordability measure.
+
+```sql
+JOIN income_data i
+    ON TRIM(LOWER(d.suburb)) = TRIM(LOWER(i.suburb))
+
+```
+
+### 4️⃣ Calculate annualised household income
+
+Because the ABS data was collected as weekly household income, I annualised it by multiplying by 52 to create a more interpretable income base.
+
+```sql
+ROUND(i.weekly_household_income * 52, 0) AS estimated_annual_household_income
+
+```
+
+### 5️⃣ Create the affordability ratio
+
+Using property price and annualised household income, I created a custom affordability metric to compare how many times annual household income is needed to match the transaction price.
+
+```sql
+ROUND(1.0 * d.price / (i.weekly_household_income * 52), 2) AS affordability_ratio
+
+```
+
+### 6️⃣ Filter to relevant and valid records
+
+Finally, I filtered the dataset to keep only relevant residential property types and remove records with missing or invalid price/income values, ensuring a clean dataset for the dashboard.
+
+```sql
+WHERE d.type IN ('House', 'Apartment / Unit / Flat')
+  AND d.price IS NOT NULL
+  AND d.price > 0
+  AND i.weekly_household_income IS NOT NULL
+  AND i.weekly_household_income > 0
+
+```
+
+---
+
+## 🧹 Data Cleaning in Power Query
+
+Additional transformation steps were completed within Power BI to refine the dataset:
+
+* 📅 Corrected date parsing issues caused by `dd/m/yy` formatting and rebuilt a valid `sold_date` field.
+* ⏳ Engineered a `Year` column for filtering and time-series trend analysis.
+* 🚫 Removed extreme luxury outliers that would heavily skew average pricing for first-home buyers.
+* 🔢 Standardized data types across price, affordability ratio, and numerical property fields.
+
+---
+
+## 📊 Dashboard Overview
+
+The Power BI dashboard was designed as an interactive overview page featuring:
+
+* **Interactive Slicers:** Filter by Year, Region, and Property Type.
+* **Dynamic KPIs:** Average Property Price, Affordability Ratio, and Distance to CBD.
+* **Advanced Interactivity:** **Bookmarks & Action Buttons** to toggle between Top 10 Most/Least Affordable suburbs.
+* **Visual Storytelling:** Scatter plots (Affordability vs. Distance) and Trend charts to track changes over time.
+
+---
+
+## 💡 Key Insights
+
+* 🚨 **High Affordability Pressure:** Across selected suburbs, the average ratio sits at a staggering 17.23, highlighting the massive hurdle for first-home buyers.
+* 📈 **The Extreme House Premium:** Filtering to "Houses" causes both average price and affordability ratio to spike significantly, indicating severe entry barriers for detached housing.
+* 🏢 **Apartments as the "Golden Ticket":** Units generally show much lower affordability ratios and shorter CBD distances, offering the strongest balance between cost and location.
+* 🎯 **The Sweet Spots:** Suburbs like Wolli Creek, Alexandria, and Parramatta provide a relatively better balance between affordability and city access.
+* 💰 **Premium Hubs:** High-demand areas (Burwood, Strathfield, North Sydney) continue to show extreme affordability pressure.
+
+---
 
 ## 🛠️ Skills Demonstrated
-* **Data Cleaning & Integration:** SQL (Joins, Aggregations, Filtering), Power Query.
-* **Data Modeling:** DAX (Explicit measures for dynamic KPIs).
-* **Data Visualization & UX:** Power BI, Dashboard Design, Bookmarks, Tooltips, Action Buttons.
-* **Business Acumen:** Translating raw datasets into actionable affordability metrics.
+
+* 🔗 **SQL Data Integration:** Multi-table `JOIN`s, string manipulation (`TRIM`, `LOWER`), and data filtering.
+* 🧮 **Data Engineering:** Custom metric creation (Affordability Ratio) and annualized income calculation.
+* 🧹 **Data Cleaning:** Null handling, outlier removal, and date parsing via Power Query.
+* 📈 **Data Visualization:** Interactive Power BI design, DAX KPIs, Bookmarks, and Cross-filtering.
+* 🧠 **Business Acumen:** Translating raw datasets into actionable decision-support insights.
+
+---
+
+## ⚙️ How to Reproduce
+
+1. Import raw property dataset, `regions.csv`, and `income_data.csv` into SQL.
+2. Execute `detail_query.sql` to generate the joined, analysis-ready dataset.
+3. Export the cleaned dataset as a CSV and load it into Power BI.
+4. Apply Power Query steps (rebuild dates, extract year).
+5. Build DAX measures and configure interactive dashboard visuals.
+
+---
+
+## 🚀 Future Improvements
+
+* 📊 Shift from average-based metrics to **median-based affordability** to reduce the impact of outliers.
+* 🏦 Incorporate dynamic **borrowing assumptions** (e.g., varying interest rates, deposit sizes).
+* 🗺️ Add drill-through detail pages for specific suburb deep-dives.
+
