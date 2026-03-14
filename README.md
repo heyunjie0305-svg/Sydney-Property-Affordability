@@ -1,5 +1,4 @@
 # 🏡 Sydney First-Home Buyer Affordability Dashboard
-```markdown
 ![Dashboard Overview](dashboard_overview.png)
 
 This project explores first-home buyer affordability across selected Sydney suburbs (2016–2021) by combining property transaction data, ABS household income data, custom region mapping, and interactive Power BI visualisations.
