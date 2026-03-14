@@ -8,7 +8,7 @@ The goal was to build a practical, decision-support dashboard that helps compare
 
 ## 📂 Project Structure
 
-* 📄 `detail_query.sql` — SQL query used to join and prepare the analysis-ready dataset.
+* 📄 `data_cleaning.sql` — SQL query used to join and prepare the analysis-ready dataset.
 * 📊 `detail_clean.csv` — Final transaction-level dataset used in Power BI.
 * 📁 `regions.csv` — Custom suburb-to-region mapping table.
 * 📁 `income_data.csv` — Suburb-level ABS weekly household income data.
