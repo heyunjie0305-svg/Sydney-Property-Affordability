@@ -8,14 +8,39 @@ This project explores the harsh reality of the property market for first-home bu
 * 📊 `Sydney_Affordability_Dashboard.pbix` → The interactive Power BI dashboard containing the final UI, DAX measures, and data model.
 * 📁 `Raw_Data/` → CSV files containing ABS regional median income and raw property transactions.
 
-## 🧹 Data Cleaning & Preparation (SQL & Power Query)
+## 🧩 Data Preparation in SQL
 
-To ensure high data quality and realistic insights, the following steps were taken:
+To prepare the final analysis-ready dataset, I used SQL to combine raw property transactions with two supporting tables:
 
-1.  **Data Sourcing:** Proactively sourced regional median income data from the **ABS (Australian Bureau of Statistics)** to create a realistic affordability benchmark.
-2.  **SQL Joins:** Merged property sales records with ABS income data using regional matching.
-3.  **Outlier Removal:** Filtered out invalid transactions (e.g., $0 sales) and extreme luxury outliers that would skew the average pricing for "first-home buyers".
-4.  **Feature Engineering:** Extracted `Year` from sale dates for time-series trend analysis.
+- a custom **Sydney region mapping** table
+- suburb-level **ABS weekly household income** data
+
+This allowed me to enrich each property transaction with location grouping and affordability context before loading the data into Power BI.
+
+### 1️⃣ Select the core transaction fields
+
+First, I selected the raw property-level fields needed for analysis, including date, suburb, property type, price, CBD distance, and property attributes.
+
+```sql
+SELECT
+    d.date_sold,
+    d.suburb AS suburb,
+    d.type AS property_type,
+    d.price AS price,
+    d.km_from_cbd AS km_from_cbd,
+    d.num_bed,
+    d.num_bath,
+    d.num_parking,
+    d.property_size
+FROM domain_properties d
+
+### 2️⃣ Add custom Sydney region mapping
+
+Next, I joined the raw property data with a custom regions.csv table to group selected suburbs into broader Sydney regions such as Inner West, North Shore, and South / St George.
+
+```sql
+JOIN regions r
+    ON TRIM(LOWER(d.suburb)) = TRIM(LOWER(r.suburb))
 
 ## 📊 Dashboard Interactivity (Power BI)
 * **Dynamic UI:** Designed a custom dark/light-mode UI.
